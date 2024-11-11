@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-    title: {
+    bookName: {
         type: [String],
         required: true
     },
@@ -60,7 +60,13 @@ const bookSchema = new mongoose.Schema({
         type: String
     },
     rating: {
-        type: [Number]
+        type: [Number],
+        validate: {
+            validator: function(v) {
+                return v.every(rating => rating >= 0 && rating <= 5);  // Ratings should be between 0 and 5
+            },
+            message: 'Ratings must be between 0 and 5'
+        }
     },
     description: {
         type: String
@@ -107,6 +113,4 @@ const bookSchema = new mongoose.Schema({
     }
 });
 
-const Book = mongoose.model('Book', bookSchema);
-
-module.exports = Book;
+module.exports = mongoose.model('Books', bookSchema);

@@ -9,6 +9,7 @@ const port = 9000;
 
 // Routes imports
 const userRoute = require("../src/routes/user/user.route")
+const booksRoute = require("../src/routes/books/books.route")
 
 
 // Middleware
@@ -29,6 +30,7 @@ mongoose.connect(uri, {dbName: process.env.DB_NAME})
 
 // Application route
 app.use("/", userRoute)
+app.use("/", booksRoute)
 
 
 app.get("/", (req, res)=> {
