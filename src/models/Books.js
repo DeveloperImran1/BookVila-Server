@@ -17,7 +17,8 @@ const bookSchema = new mongoose.Schema({
         type: [String]
     },
     subject: {
-        type: String
+        type: [String],
+        required: true
     },
     price: {
         type: Number,
