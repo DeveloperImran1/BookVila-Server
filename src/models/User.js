@@ -1,20 +1,32 @@
-
+const bcrypt = require('bcrypt');
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
-    email: String,
-    phone: String,
-    block: Boolean,
-    password: {
+    name: {
       type: String,
       required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: String,
+    photo: String,
+    block: {
+      type: String,
+      enum: [true, false],
+      default: false
+    },
+    password: {
+      type: String,
+      // required: true,
+      set: (v) =>  bcrypt.hashSync(v, bcrypt.genSaltSync(10))  // myPlaintextPassword er jaigai perameter er v dita hobe. ai v te user er deewa password ta asbe. saltRounds er jaigai koita charecter er moddhe salt hobe, sei charecter number dita hoi.
     },
     notifications: [
       {
         type: { type: String, enum: ["order"]},
-        message: { type: String, required: true },
+        message: { type: String },
         route: { type: String, default: null },
         isRead: { type: Boolean, default: false },
         createdAt: { type: Date, default: Date.now }

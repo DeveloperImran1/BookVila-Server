@@ -55,4 +55,31 @@ const getAllBooks = async (req, res) => {
 };
 
 
-  module.exports = {getAllBooks}
+// get featured books
+const getFeaturedBooks = async (req, res) => {
+  try {
+    const { subCategory, searchQuery } = req.query;
+    console.log(req.query)
+    if (!subCategory) {
+      return res.status(400).json({ message: "Subcategory is required" });
+    }
+    const query = { subCategory: subCategory }
+
+    if (searchQuery) {
+      console.log(searchQuery)
+      const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+      console.log(searchQuery)
+      query.subCategory = { $in: [regex] }; // Match any part of book name
+    }
+
+    const books = await Books.find(query)
+
+    res.status(200).json({ books });
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+module.exports = { getAllBooks, getFeaturedBooks }
