@@ -58,7 +58,8 @@ const getAllBooks = async (req, res) => {
 // get featured books
 const getFeaturedBooks = async (req, res) => {
   try {
-    const { subCategory, searchQuery } = req.query;
+    const { subCategory, searchQuery, page = 1 } = req.query;
+    const limit = 12;
     console.log(req.query)
     if (!subCategory) {
       return res.status(400).json({ message: "Subcategory is required" });
@@ -69,12 +70,16 @@ const getFeaturedBooks = async (req, res) => {
       console.log(searchQuery)
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
       console.log(searchQuery)
-      query.subCategory = { $in: [regex] }; // Match any part of book name
+      query.bookName = { $in: regex };
     }
 
     const books = await Books.find(query)
+      .skip((page - 1) * limit)
+      .limit(Number(limit))
 
-    res.status(200).json({ books });
+    const totalBooks = await Books.countDocuments(query);
+
+    res.status(200).json({ books, totalBooks });
   }
   catch (error) {
     res.status(500).json({ message: error.message });
@@ -82,4 +87,27 @@ const getFeaturedBooks = async (req, res) => {
 }
 
 
-module.exports = { getAllBooks, getFeaturedBooks }
+// getAll Books
+const getBooks = async (req, res) => {
+  try {
+    const query = {};
+    const {searchQuery} = req.query;
+    if (searchQuery) {
+      console.log(searchQuery)
+      const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+      console.log(searchQuery)
+      query.bookName = { $in: regex };
+    }
+    const books = await Books.find(query)
+   
+    res.status(200).json(books);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+
+
+module.exports = { getAllBooks, getFeaturedBooks, getBooks }
