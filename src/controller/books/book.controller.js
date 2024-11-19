@@ -104,6 +104,42 @@ const getFeaturedBooks = async (req, res) => {
 }
 
 
+
+
+
+// get Budjet Friendly books
+const getBudgetFriendlyBooks = async (req, res) => {
+  try {
+    const { searchQuery, page = 1 } = req.query;
+    const limit = 12;
+    console.log(req.query)
+   
+    const query = { price: {$lt: 151} }
+
+    if (searchQuery) {
+      console.log(searchQuery)
+      const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+      console.log(searchQuery)
+      query.bookName = { $in: regex };
+    }
+
+    const books = await Books.find(query)
+      .skip((page - 1) * limit)
+      .limit(Number(limit))
+
+    const totalBooks = await Books.countDocuments(query);
+
+    res.status(200).json({ books, totalBooks });
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+
+
+
 // getAll Books
 const getBooks = async (req, res) => {
   try {
@@ -127,4 +163,5 @@ const getBooks = async (req, res) => {
 
 
 
-module.exports = { getAllBooks, getSingleBook, getFeaturedBooks, getBooks }
+
+module.exports = { getAllBooks,  getSingleBook, getFeaturedBooks, getBooks, getBudgetFriendlyBooks, }

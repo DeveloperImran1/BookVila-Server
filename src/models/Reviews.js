@@ -8,19 +8,22 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userEmail: {
+        type: String,
+    },
     userImage: {
         type: String,
-        required: true
+    },
+    bookPhoto: {
+        type: [String],
     },
     rating: {
         type: Number,
-        required: true,
         min: 1,
         max: 5
     },
     comment: {
         type: String,
-        required: true,
         maxlength: 500
     },
     createdAt: {

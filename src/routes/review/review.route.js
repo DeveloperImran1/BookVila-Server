@@ -1,9 +1,10 @@
 const express = require('express');
-const { getAllReviews } = require('../../controller/reviews/review.controller');
+const { getAllReviews, getMyReviews } = require('../../controller/reviews/review.controller');
 const router = express.Router();
 
 
-router.get('/getAllReviews', getAllReviews)
+router.get('/getAllReviews', getAllReviews);
+router.get('/getMyReviews/:email', getMyReviews);
 
 
 module.exports = router;

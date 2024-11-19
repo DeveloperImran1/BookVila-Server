@@ -38,6 +38,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    publicationID: {
+        type: String,
+        unique: true
+    },
     edition: {
         type: String
     },
