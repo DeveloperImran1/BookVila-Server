@@ -1,10 +1,10 @@
-const Authors = require("../../models/Authors");
 const { ObjectId } = require('mongodb');
-const Books = require("../../models/Books");
+const Publication = require('../../models/Publication');
+const Books = require('../../models/Books');
 
-const getAllAuthors = async (req, res) => {
+const getPublications = async (req, res) => {
     try {
-        const result = await Authors.find()
+        const result = await Publication.find()
         console.log(result)
         res.status(200).json(result);
     }
@@ -12,11 +12,14 @@ const getAllAuthors = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-const getSingleWriter = async (req, res) => {
+
+  
+// get single publication with id
+const getSinglePublication = async (req, res) => {
     const id = req.params.id;
     console.log(id)
     try {
-        const result = await Authors.find({ authorID: id })
+        const result = await Publication.find({ _id: new ObjectId(id) })
         console.log(result)
         res.status(200).json(result);
     }
@@ -26,16 +29,17 @@ const getSingleWriter = async (req, res) => {
 }
 
 
-  // get single authors all books
-const getAuthorBooks = async (req, res) => {
+
+  // get single Publication all books
+  const getPublicationBooks = async (req, res) => {
     try {
-      const { authorId, searchQuery, page = 1 } = req.query;
+      const { publicationId, searchQuery, page = 1 } = req.query;
       const limit = 12;
       console.log(req.query)
-      if (!authorId) {
-        return res.status(400).json({ message: "Ahthor Id is required" });
+      if (!publicationId) {
+        return res.status(400).json({ message: "Publication Id is required" });
       }
-      const query = { "authorInfo.authorID": authorId }
+      const query = { "publicationID": publicationId }
   
       if (searchQuery) {
         console.log(searchQuery)
@@ -56,7 +60,5 @@ const getAuthorBooks = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   }
-  
-  
 
-module.exports = { getAllAuthors, getSingleWriter, getAuthorBooks };
+module.exports = { getPublications, getSinglePublication, getPublicationBooks };
