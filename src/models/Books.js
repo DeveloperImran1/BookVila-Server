@@ -81,15 +81,6 @@ const bookSchema = new mongoose.Schema({
             required: true
         }
     },
-    publisherInfo: {
-        name: {
-            type: String,
-            required: true
-        },
-        website: {
-            type: String
-        }
-    },
     buyingOptions: [
         {
             type: {
