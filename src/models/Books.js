@@ -38,6 +38,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    publicationID: {
+        type: String,
+        unique: true
+    },
     edition: {
         type: String
     },
@@ -79,15 +83,6 @@ const bookSchema = new mongoose.Schema({
         authorID: {
             type: String,
             required: true
-        }
-    },
-    publisherInfo: {
-        name: {
-            type: String,
-            required: true
-        },
-        website: {
-            type: String
         }
     },
     buyingOptions: [
