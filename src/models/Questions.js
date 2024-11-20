@@ -52,5 +52,5 @@ const bookQuestionsSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('questions', bookQuestionsSchema);
+module.exports = mongoose.model('Questions', bookQuestionsSchema);
 
