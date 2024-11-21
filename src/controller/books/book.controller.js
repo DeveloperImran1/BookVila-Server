@@ -104,6 +104,38 @@ const getFeaturedBooks = async (req, res) => {
 }
 
 
+// get similar books by category
+const getCaterogyBooks = async (req, res) => {
+  try {
+    const { category, searchQuery, page = 1 } = req.query;
+    const limit = 12;
+    // console.log(req.query)
+    if (!category) {
+      return res.status(400).json({ message: "category is required" });
+    }
+    // Convert category to an array if it’s a string (to handle query strings like `?category=Novel&category=উপন্যাস`)
+    const categories = Array.isArray(category) ? category : [category];
+
+    // Create query with $in to match any value in the category array
+    const query = { category: { $in: categories } };
+
+    console.log("category is", category)
+ 
+
+    const books = await Books.find(query)
+      .skip((page - 1) * limit)
+      .limit(Number(limit))
+
+    const totalBooks = await Books.countDocuments(query);
+
+    res.status(200).json({ books, totalBooks });
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
 
 
 
@@ -164,4 +196,4 @@ const getBooks = async (req, res) => {
 
 
 
-module.exports = { getAllBooks,  getSingleBook, getFeaturedBooks, getBooks, getBudgetFriendlyBooks, }
+module.exports = { getAllBooks,  getSingleBook, getFeaturedBooks, getBooks, getBudgetFriendlyBooks, getCaterogyBooks}

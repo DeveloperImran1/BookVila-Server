@@ -77,7 +77,7 @@ const userSchema = new mongoose.Schema(
     year: String,
     gender: String,
     block: { type: Boolean, default: false },
-    password: { type: String, required: true }, // Removed the 'set' method
+    password: { type: String}, // Removed the 'set' method
     notifications: [
       {
         type: { type: String, enum: ["order"] },
