@@ -23,4 +23,33 @@ const getMyReviews = async (req, res) => {
     }
 }
 
-module.exports = { getAllReviews, getMyReviews };
+const getReview = async (req, res) => {
+    const id = req?.params?.id;
+    try {
+        const result = await Reviews.find({bookId: id})
+        console.log(result)
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// new review add 
+
+const addNewReview = async (req, res) => {
+    const id = req?.params?.id;
+    const reviewObj = req?.body;
+    console.log(id, reviewObj)
+    try {
+        const result = await Reviews.create(reviewObj)
+        console.log(result)
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+module.exports = { getAllReviews, getMyReviews, getReview, addNewReview };
