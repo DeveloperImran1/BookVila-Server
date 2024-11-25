@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema({
         type: String,
     },
     bookPhoto: {
-        type: [String],
+        type: [String],  // aikhane array er moddhe onekgulo image thakteo pare abar nao thakte pare
     },
     rating: {
         type: Number,
@@ -23,6 +23,10 @@ const reviewSchema = new mongoose.Schema({
         max: 5
     },
     comment: {
+        type: String,
+        maxlength: 500
+    },
+    bookId: {
         type: String,
         maxlength: 500
     },

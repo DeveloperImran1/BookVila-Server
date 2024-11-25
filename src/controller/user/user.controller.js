@@ -71,6 +71,7 @@ const getMyProfileInfo = async (req, res) => {
 const addeNewUser = async (req, res) => {
   const user = req.body;
   const userEmail = user?.email;
+  console.log(user)
   try {
     const currentUser = await User.findOne({ email: userEmail });
     if (currentUser) {
@@ -117,23 +118,26 @@ const updatePass = async (req, res) => {
   const userEmail = req?.params?.email;
   console.log(newObj, userEmail)
 
-  const userInfo = await User.findOne({ email: userEmail });
-  console.log(userInfo)
-
-  // Password comparison using bcrypt
-  const passwordMatched = await bcrypt.compare(newObj?.oldPass, userInfo?.password);
-
-  console.log(passwordMatched)
-  if (!passwordMatched) {
-    return res.send({
-      success: false,
-      message: "Credentials Error"
-    })
-  }
-
-  const hashdPass = await bcrypt.hashSync(newObj?.newPass, bcrypt.genSaltSync(10))  // myPlaintextPassword er jaigai perameter er v dita hobe. ai v te user er deewa password ta asbe. saltRounds er jaigai koita charecter er moddhe salt hobe, sei charecter number dita hoi.
 
   try {
+
+    const userInfo = await User.findOne({ email: userEmail });
+    console.log(userInfo)
+  
+    // Password comparison using bcrypt
+    const passwordMatched = await bcrypt.compare(newObj?.oldPass, userInfo?.password);
+  
+    console.log(passwordMatched)
+    if (!passwordMatched) {
+      return res.send({
+        success: false,
+        message: "Credentials Error"
+      })
+    }
+  
+    const hashdPass = await bcrypt.hashSync(newObj?.newPass, bcrypt.genSaltSync(10))  // myPlaintextPassword er jaigai perameter er v dita hobe. ai v te user er deewa password ta asbe. saltRounds er jaigai koita charecter er moddhe salt hobe, sei charecter number dita hoi.
+
+    
     const result = await User.updateOne(
       { email: userEmail },
       { $set: {
