@@ -27,7 +27,7 @@ app.use(cors({
 }))
 
 
-// MongoDB Connection
+// MongoDB Connectionn
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qnwtz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.x89fm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 mongoose.connect(uri, {dbName: process.env.DB_NAME})
