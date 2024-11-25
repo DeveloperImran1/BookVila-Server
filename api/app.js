@@ -9,6 +9,14 @@ const port = 9000;
 
 // Routes imports
 const userRoute = require("../src/routes/user/user.route")
+const booksRoute = require("../src/routes/books/books.route");
+const reviewsRoute = require("../src/routes/review/review.route");
+const questionRoute = require("../src/routes/question/question.route");
+const authorRoute = require("../src/routes/authors/autrhor.route");
+const publicationRoute = require("../src/routes/publication/publication.route");
+const favoruteRoute = require("../src/routes/favorutes/favorute.route");
+const addToCartRoute = require("../src/routes/addToCart/addToCart.route");
+const orderRoute = require("../src/routes/orders/order.route");
 
 
 // Middleware
@@ -29,6 +37,14 @@ mongoose.connect(uri, {dbName: process.env.DB_NAME})
 
 // Application route
 app.use("/", userRoute)
+app.use("/", booksRoute)
+app.use("/", reviewsRoute)
+app.use("/", questionRoute)
+app.use("/", authorRoute)
+app.use("/", publicationRoute)
+app.use("/", favoruteRoute)
+app.use("/", addToCartRoute)
+app.use("/", orderRoute)
 
 
 app.get("/", (req, res)=> {
