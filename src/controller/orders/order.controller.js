@@ -23,6 +23,20 @@ const getMyOrder = async (req, res) => {
     }
 }
 
+// create new order
+const createNewOrder = async (req, res) => {
+    const newOrder = req.body;
+    console.log(newOrder)
+    try {
+        const result = await Order.create(newOrder)
+        console.log(result)
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
-module.exports = { getAllOrder, getMyOrder };
+
+module.exports = { getAllOrder, getMyOrder, createNewOrder };
