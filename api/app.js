@@ -17,6 +17,7 @@ const publicationRoute = require("../src/routes/publication/publication.route");
 const favoruteRoute = require("../src/routes/favorutes/favorute.route");
 const addToCartRoute = require("../src/routes/addToCart/addToCart.route");
 const orderRoute = require("../src/routes/orders/order.route");
+const checkoutRoute = require("../src/routes/checkout/checkout.route");
 
 
 // Middleware
@@ -45,6 +46,7 @@ app.use("/", publicationRoute)
 app.use("/", favoruteRoute)
 app.use("/", addToCartRoute)
 app.use("/", orderRoute)
+app.use("/", checkoutRoute)
 
 
 app.get("/", (req, res)=> {
