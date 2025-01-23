@@ -119,7 +119,6 @@ const getCaterogyBooks = async (req, res) => {
     // Create query with $in to match any value in the category array
     const query = { category: { $in: categories } };
 
-    console.log("category is", category)
  
 
     const books = await Books.find(query)
@@ -144,7 +143,6 @@ const getBudgetFriendlyBooks = async (req, res) => {
   try {
     const { searchQuery, page = 1 } = req.query;
     const limit = 12;
-    console.log(req.query)
    
     const query = { price: {$lt: 151} }
 

@@ -5,7 +5,6 @@ const Books = require("../../models/Books");
 const getAllAuthors = async (req, res) => {
     try {
         const result = await Authors.find()
-        console.log(result)
         res.status(200).json(result);
     }
     catch (error) {
@@ -14,10 +13,8 @@ const getAllAuthors = async (req, res) => {
 }
 const getSingleWriter = async (req, res) => {
     const id = req.params.id;
-    console.log(id)
     try {
         const result = await Authors.find({ authorID: id })
-        console.log(result)
         res.status(200).json(result);
     }
     catch (error) {
@@ -31,16 +28,13 @@ const getAuthorBooks = async (req, res) => {
     try {
       const { authorId, searchQuery, page = 1 } = req.query;
       const limit = 12;
-      console.log(req.query)
       if (!authorId) {
         return res.status(400).json({ message: "Ahthor Id is required" });
       }
       const query = { "authorInfo.authorID": authorId }
   
       if (searchQuery) {
-        console.log(searchQuery)
         const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
-        console.log(searchQuery)
         query.bookName = { $in: regex };
       }
   

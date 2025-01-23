@@ -5,7 +5,6 @@ const getMyAddToCart = async (req, res) => {
     const myEmail = req.params.myEmail;
     try {
         const result = await AddToCart.find({userEmail: myEmail})
-        console.log(result)
         res.status(200).json(result);
     }
     catch (error) {
@@ -16,10 +15,8 @@ const getMyAddToCart = async (req, res) => {
 // add add to cart book
 const addToCartBook = async(req, res)=> {
     const obj = req.body;
-    console.log("add to cart er object: ", obj);
     try{
         const result = await AddToCart.create(obj)
-        console.log(result)
         res.status(200).json(result);
     }
     catch(error){

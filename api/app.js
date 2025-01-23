@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express()
 const http = require('http');
 const cors = require('cors');
@@ -17,11 +19,14 @@ const publicationRoute = require("../src/routes/publication/publication.route");
 const favoruteRoute = require("../src/routes/favorutes/favorute.route");
 const addToCartRoute = require("../src/routes/addToCart/addToCart.route");
 const orderRoute = require("../src/routes/orders/order.route");
-const checkoutRoute = require("../src/routes/checkout/checkout.route");
 
 
 // Middleware
 app.use(express.json());
+
+// Middleware to parse URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors({
     origin: ["http://localhost:3000", "http://localhost:3001", "https://book-vila-client.vercel.app"],
     credentials: true,
@@ -46,7 +51,6 @@ app.use("/", publicationRoute)
 app.use("/", favoruteRoute)
 app.use("/", addToCartRoute)
 app.use("/", orderRoute)
-app.use("/", checkoutRoute)
 
 
 app.get("/", (req, res)=> {

@@ -5,7 +5,6 @@ const Books = require('../../models/Books');
 const getPublications = async (req, res) => {
     try {
         const result = await Publication.find()
-        console.log(result)
         res.status(200).json(result);
     }
     catch (error) {
@@ -17,10 +16,8 @@ const getPublications = async (req, res) => {
 // get single publication with id
 const getSinglePublication = async (req, res) => {
     const id = req.params.id;
-    console.log(id)
     try {
         const result = await Publication.find({ _id: new ObjectId(id) })
-        console.log(result)
         res.status(200).json(result);
     }
     catch (error) {
@@ -35,7 +32,6 @@ const getSinglePublication = async (req, res) => {
     try {
       const { publicationId, searchQuery, page = 1 } = req.query;
       const limit = 12;
-      console.log(req.query)
       if (!publicationId) {
         return res.status(400).json({ message: "Publication Id is required" });
       }
