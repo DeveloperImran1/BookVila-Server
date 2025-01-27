@@ -1,10 +1,21 @@
-
+const Authors = require("../../models/Authors");
 const Books = require("../../models/Books");
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 
 const getAllBooks = async (req, res) => {
   try {
-    const { searchQuery, author, category, subject, minPrice, maxPrice, page = 1, limit = 10 } = req.query;
+    const {
+      searchQuery,
+      author,
+      category,
+      subject,
+      minPrice,
+      maxPrice,
+      page,
+      limit,
+      // page = 1,
+      // limit = 10,
+    } = req.query;
 
     // MongoDB Query setup
     const query = {};
@@ -71,7 +82,6 @@ const getSingleBook = async (req, res) => {
   }
 };
 
-
 // get featured books
 const getFeaturedBooks = async (req, res) => {
   try {
@@ -81,28 +91,26 @@ const getFeaturedBooks = async (req, res) => {
     if (!subCategory) {
       return res.status(400).json({ message: "Subcategory is required" });
     }
-    const query = { subCategory: subCategory }
+    const query = { subCategory: subCategory };
 
     if (searchQuery) {
       // console.log(searchQuery)
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
-      console.log(searchQuery)
+      console.log(searchQuery);
       query.bookName = { $in: regex };
     }
 
     const books = await Books.find(query)
       .skip((page - 1) * limit)
-      .limit(Number(limit))
+      .limit(Number(limit));
 
     const totalBooks = await Books.countDocuments(query);
 
     res.status(200).json({ books, totalBooks });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
+};
 
 // get similar books by category
 const getCaterogyBooks = async (req, res) => {
@@ -119,79 +127,148 @@ const getCaterogyBooks = async (req, res) => {
     // Create query with $in to match any value in the category array
     const query = { category: { $in: categories } };
 
- 
-
     const books = await Books.find(query)
       .skip((page - 1) * limit)
-      .limit(Number(limit))
+      .limit(Number(limit));
 
     const totalBooks = await Books.countDocuments(query);
 
     res.status(200).json({ books, totalBooks });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
-
-
-
+};
 
 // get Budjet Friendly books
 const getBudgetFriendlyBooks = async (req, res) => {
   try {
     const { searchQuery, page = 1 } = req.query;
     const limit = 12;
-   
-    const query = { price: {$lt: 151} }
+
+    const query = { price: { $lt: 151 } };
 
     if (searchQuery) {
-      console.log(searchQuery)
+      console.log(searchQuery);
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
-      console.log(searchQuery)
+      console.log(searchQuery);
       query.bookName = { $in: regex };
     }
 
     const books = await Books.find(query)
       .skip((page - 1) * limit)
-      .limit(Number(limit))
+      .limit(Number(limit));
 
     const totalBooks = await Books.countDocuments(query);
 
     res.status(200).json({ books, totalBooks });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
-
-
-
+};
 
 // getAll Books
 const getBooks = async (req, res) => {
   try {
     const query = {};
-    const {searchQuery} = req.query;
+    const { searchQuery } = req.query;
     if (searchQuery) {
       // console.log(searchQuery)
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
       // console.log(searchQuery)
       query.bookName = { $in: regex };
     }
-    const books = await Books.find(query)
-   
+    const books = await Books.find(query);
+
     res.status(200).json(books);
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
+// getAll Books length
+const getBooksLength = async (req, res) => {
+  try {
+    const books = await Books.find().countDocuments();
 
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+// add new book
+const addNewBook = async (req, res) => {
+  const bookObj = req.body;
+  try {
+    const result = await Books.create(bookObj);
 
+    // get auitho info using authorID
+    const authorInfo = await Authors.findOne({
+      authorID: bookObj?.authorInfo?.authorID,
+    });
+    console.log("authorInfo", authorInfo);
+    const updateAuthorInfo = await Authors.updateOne(
+      { authorID: bookObj?.authorInfo?.authorID },
+      {
+        $push: {
+          books: {
+            bookID: bookObj?.bookID,
+            title: bookObj?.bookName?.[0],
+          },
+        },
+      }
+    );
+    if (updateAuthorInfo?.modifiedCount) {
+      res.status(200).json(result);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-module.exports = { getAllBooks,  getSingleBook, getFeaturedBooks, getBooks, getBudgetFriendlyBooks, getCaterogyBooks}
+// update a specific book with id
+const updateBook = async (req, res) => {
+  const { id } = req.params; // Extract bookID from the URL
+  const updatedData = req.body; // Extract updated data from the request body
+  console.log(id, updatedData);
+  try {
+    const updatedBook = await Books.findOneAndUpdate(
+      { _id: new ObjectId(id) }, // Filter: find the book by its bookID
+      updatedData, // The data to update
+      { new: true, runValidators: true } // Options: return the updated document and validate
+    );
+
+    if (!updatedBook) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(updatedBook); // Send the updated book as a response
+  } catch (error) {
+    res.status(500).json({ message: error.message }); // Send error message
+  }
+};
+
+// delete a book with _id
+const deleteBook = async (req, res) => {
+  const bookId = req.params.id;
+  console.log(bookId);
+  try {
+    const result = await Books.deleteOne({ _id: new ObjectId(bookId) });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  getAllBooks,
+  getSingleBook,
+  getFeaturedBooks,
+  getBooks,
+  getBudgetFriendlyBooks,
+  getCaterogyBooks,
+  getBooksLength,
+  addNewBook,
+  deleteBook,
+  updateBook,
+};

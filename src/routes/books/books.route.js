@@ -1,14 +1,28 @@
-const express = require('express');
-const { getAllBooks, getSingleBook, getFeaturedBooks, getRecentlyAddedBooks, getBooks, getBudgetFriendlyBooks, getCaterogyBooks } = require('../../controller/books/book.controller');
+const express = require("express");
+const {
+  getAllBooks,
+  getSingleBook,
+  getFeaturedBooks,
+  getRecentlyAddedBooks,
+  getBooks,
+  getBudgetFriendlyBooks,
+  getCaterogyBooks,
+  getBooksLength,
+  addNewBook,
+  deleteBook,
+  updateBook,
+} = require("../../controller/books/book.controller");
 const router = express.Router();
 
-
-router.get('/books', getAllBooks);
-router.get('/book/:id', getSingleBook);
-router.get('/getBooks', getBooks);
-router.get('/getFeaturedBooks', getFeaturedBooks);
-router.get('/getBudgetFriendlyBooks', getBudgetFriendlyBooks);
-router.get('/getCaterogyBooks', getCaterogyBooks);
-
+router.get("/books", getAllBooks);
+router.get("/book/:id", getSingleBook);
+router.get("/getBooks", getBooks);
+router.get("/getFeaturedBooks", getFeaturedBooks);
+router.get("/getBudgetFriendlyBooks", getBudgetFriendlyBooks);
+router.get("/getCaterogyBooks", getCaterogyBooks);
+router.get("/getBooksLength", getBooksLength);
+router.post("/addNewBook", addNewBook);
+router.delete("/deleteBook/:id", deleteBook);
+router.put("/updateBook/:id", updateBook);
 
 module.exports = router;
