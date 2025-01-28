@@ -166,6 +166,27 @@ const cancle = async (req, res) => {
   res.redirect("http://localhost:3000/cancle");
 };
 
+const statusUpdate = async (req, res) => {
+  const { id } = req.params;
+  const status = req.body?.status;
+  console.log(id, status);
+  try {
+    const result = await Order.updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          status,
+        },
+      }
+    );
+
+    console.log("res is ", result);
+    res.status(200).json(result); // Send the updated book as a response
+  } catch (error) {
+    res.status(500).json({ message: error.message }); // Send error message
+  }
+};
+
 module.exports = {
   getAllOrder,
   getMyOrder,
@@ -175,4 +196,5 @@ module.exports = {
   successPayment,
   fail,
   cancle,
+  statusUpdate,
 };

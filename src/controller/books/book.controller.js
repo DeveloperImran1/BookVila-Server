@@ -1,6 +1,7 @@
 const Authors = require("../../models/Authors");
 const Books = require("../../models/Books");
 const { ObjectId } = require("mongodb");
+const Publication = require("../../models/Publication");
 
 const getAllBooks = async (req, res) => {
   try {
@@ -117,7 +118,6 @@ const getCaterogyBooks = async (req, res) => {
   try {
     const { category, searchQuery, page = 1 } = req.query;
     const limit = 12;
-    // console.log(req.query)
     if (!category) {
       return res.status(400).json({ message: "category is required" });
     }
@@ -148,9 +148,7 @@ const getBudgetFriendlyBooks = async (req, res) => {
     const query = { price: { $lt: 151 } };
 
     if (searchQuery) {
-      console.log(searchQuery);
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
-      console.log(searchQuery);
       query.bookName = { $in: regex };
     }
 
@@ -206,7 +204,6 @@ const addNewBook = async (req, res) => {
     const authorInfo = await Authors.findOne({
       authorID: bookObj?.authorInfo?.authorID,
     });
-    console.log("authorInfo", authorInfo);
     const updateAuthorInfo = await Authors.updateOne(
       { authorID: bookObj?.authorInfo?.authorID },
       {
@@ -218,7 +215,30 @@ const addNewBook = async (req, res) => {
         },
       }
     );
-    if (updateAuthorInfo?.modifiedCount) {
+
+    // get publication info using publicationID
+    const publicationInfo = await Publication.findOne({
+      publicationID: bookObj?.publicationID,
+    });
+
+    const updatePublicationInfo = await Publication.updateOne(
+      { publicationID: bookObj?.publicationID },
+      {
+        $push: {
+          books: {
+            bookID: bookObj?.bookID,
+            title: bookObj?.bookName?.[0],
+          },
+        },
+      }
+    );
+
+    console.log("updatePublicationInfo", updatePublicationInfo);
+
+    if (
+      updateAuthorInfo?.modifiedCount &&
+      updatePublicationInfo?.modifiedCount
+    ) {
       res.status(200).json(result);
     }
   } catch (error) {
@@ -230,7 +250,6 @@ const addNewBook = async (req, res) => {
 const updateBook = async (req, res) => {
   const { id } = req.params; // Extract bookID from the URL
   const updatedData = req.body; // Extract updated data from the request body
-  console.log(id, updatedData);
   try {
     const updatedBook = await Books.findOneAndUpdate(
       { _id: new ObjectId(id) }, // Filter: find the book by its bookID
@@ -251,7 +270,6 @@ const updateBook = async (req, res) => {
 // delete a book with _id
 const deleteBook = async (req, res) => {
   const bookId = req.params.id;
-  console.log(bookId);
   try {
     const result = await Books.deleteOne({ _id: new ObjectId(bookId) });
     res.status(200).json(result);
