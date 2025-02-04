@@ -109,13 +109,7 @@ const addeNewUser = async (req, res) => {
         </p>
         <p style="font-size: 14px;">Sincerely,</p>
         <p style="font-size: 14px; font-weight: bold;">The Book Vila Team</p>
-      <img 
-  src="https://i.postimg.cc/SNp4T6JM/Book-Vila-logo-removebg-preview.png" 
-  alt="Book Vila logo" 
-  width="200" 
-  height="200" 
-  style="display: block; max-width: 100%; height: auto; object-fit: contain; margin: 0 auto;"
-/>
+      <img src="https://i.postimg.cc/SNp4T6JM/Book-Vila-logo-removebg-preview.png"  alt="Book Vila logo"  width="200" height="200" />
       </div>
       `,
     }).then(() =>
