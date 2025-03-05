@@ -2,7 +2,7 @@ const express = require("express");
 const {
   getAllBooks,
   getSingleBook,
-  getFeaturedBooks,
+  getAttributeBooks,
   getRecentlyAddedBooks,
   getBooks,
   getBudgetFriendlyBooks,
@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/books", getAllBooks);
 router.get("/book/:id", getSingleBook);
 router.get("/getBooks", getBooks);
-router.get("/getFeaturedBooks", getFeaturedBooks);
+router.get("/getAttributeBooks", getAttributeBooks);
 router.get("/getBudgetFriendlyBooks", getBudgetFriendlyBooks);
 router.get("/getCaterogyBooks", getCaterogyBooks);
 router.get("/getBooksLength", getBooksLength);

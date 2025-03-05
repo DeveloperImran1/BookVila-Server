@@ -1,38 +1,35 @@
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
   bookID: {
     type: String,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const publicationSchema = new mongoose.Schema({
   publicationID: {
     type: String,
     required: true,
-    unique: true
+    // unique: true,
   },
   name: {
     type: [String], // Array to support multiple names (e.g., in different languages)
-    required: true
+    required: true,
   },
-  
+
   photo: {
     type: String,
-    required: true
+    required: true,
   },
   books: {
     type: [bookSchema], // Array of bookSchema objects
-    required: true
-  }
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('publications', publicationSchema);
-
-
+module.exports = mongoose.model("publications", publicationSchema);

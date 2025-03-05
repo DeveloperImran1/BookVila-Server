@@ -19,6 +19,9 @@ const favoruteRoute = require("../src/routes/favorutes/favorute.route");
 const addToCartRoute = require("../src/routes/addToCart/addToCart.route");
 const orderRoute = require("../src/routes/orders/order.route");
 const categoryRoute = require("../src/routes/category/category.route");
+const subjectRoute = require("../src/routes/subject/subject.route");
+const subCategoryRoute = require("../src/routes/subCategory/subCategory.route");
+const bannerRoute = require("../src/routes/banner/banner.route");
 
 // Middleware
 app.use(express.json());
@@ -60,6 +63,9 @@ app.use("/", favoruteRoute);
 app.use("/", addToCartRoute);
 app.use("/", orderRoute);
 app.use("/", categoryRoute);
+app.use("/", subCategoryRoute);
+app.use("/", subjectRoute);
+app.use("/", bannerRoute);
 
 app.get("/", (req, res) => {
   res.send("Welcome to BookVila Platform!");

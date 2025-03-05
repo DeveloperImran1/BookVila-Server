@@ -84,20 +84,19 @@ const getSingleBook = async (req, res) => {
 };
 
 // get featured books
-const getFeaturedBooks = async (req, res) => {
+const getAttributeBooks = async (req, res) => {
   try {
-    const { subCategory, searchQuery, page = 1 } = req.query;
+    const { attribute, searchQuery, page = 1 } = req.query;
     const limit = 12;
     // console.log(req.query)
-    if (!subCategory) {
-      return res.status(400).json({ message: "Subcategory is required" });
+    if (!attribute) {
+      return res.status(400).json({ message: "Attribute is required" });
     }
-    const query = { subCategory: subCategory };
+    const query = { [attribute]: true };
 
     if (searchQuery) {
       // console.log(searchQuery)
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
-      console.log(searchQuery);
       query.bookName = { $in: regex };
     }
 
@@ -145,7 +144,7 @@ const getBudgetFriendlyBooks = async (req, res) => {
     const { searchQuery, page = 1 } = req.query;
     const limit = 12;
 
-    const query = { price: { $lt: 151 } };
+    const query = { price: { $lt: 250 } };
 
     if (searchQuery) {
       const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
@@ -233,7 +232,12 @@ const addNewBook = async (req, res) => {
       }
     );
 
-    console.log("updatePublicationInfo", updatePublicationInfo);
+    console.log(
+      "updateAuthorInfo",
+      updateAuthorInfo,
+      "updatePublicationInfo",
+      updatePublicationInfo
+    );
 
     if (
       updateAuthorInfo?.modifiedCount &&
@@ -281,7 +285,7 @@ const deleteBook = async (req, res) => {
 module.exports = {
   getAllBooks,
   getSingleBook,
-  getFeaturedBooks,
+  getAttributeBooks,
   getBooks,
   getBudgetFriendlyBooks,
   getCaterogyBooks,

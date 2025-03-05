@@ -33,17 +33,21 @@ const bookSchema = new mongoose.Schema({
   },
   bookID: {
     type: String,
-    unique: true,
+    // unique: true,
   },
+
   publicationID: {
     type: String,
-    unique: true,
+    // index: false, // Index Remove
+    // unique: false, // Unique Remove
   },
+
   edition: {
     type: String,
   },
   publicationDate: {
     type: Date,
+    default: Date.now(),
   },
   pages: {
     type: Number,
@@ -75,11 +79,11 @@ const bookSchema = new mongoose.Schema({
   authorInfo: {
     name: {
       type: [String],
-      required: true,
+      // required: true,
     },
     authorID: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   buyingOptions: [
@@ -95,6 +99,15 @@ const bookSchema = new mongoose.Schema({
       },
     },
   ],
+  isFeatured: { type: Boolean },
+  isRecentlyAdded: { type: Boolean },
+  isFlashSale: { type: Boolean },
+  isPreOrder: { type: Boolean },
+  isBestSelling: { type: Boolean },
+  isComboOffer: { type: Boolean },
+  isTrending: { type: Boolean },
+  isGift: { type: Boolean },
+
   createdAt: {
     type: Date,
     default: Date.now,
