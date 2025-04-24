@@ -9,6 +9,7 @@ const {
   cancle,
   getMyOrderWithId,
   statusUpdate,
+  handleWebhook,
 } = require("../../controller/orders/order.controller");
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post("/createNewOrder", createNewOrder);
 // payment related route
 router.post("/createPayment", createPayment);
 router.post("/successPayment", successPayment);
-router.post("/fail", fail);
+router.post("/handleWebhook", handleWebhook);
 router.post("/cancle", cancle);
 router.put("/statusUpdate/:id", statusUpdate);
 

@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+      "https://www.readora.shop",
       "http://localhost:3001",
       "https://book-vila-client.vercel.app",
     ],

@@ -88,13 +88,13 @@ const addeNewUser = async (req, res) => {
 
     // wellcome message sent for signup bookvila
     await sendEmail(userEmail, {
-      subject: "Welcome to Book Vila!",
+      subject: "Welcome to Readora!",
       message: `
       <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; color: #333;">
-        <h1 style="font-size: 24px; font-weight: bold; color: #160078;">Welcome to Book Vila!</h1>
+        <h1 style="font-size: 24px; font-weight: bold; color: #160078;">Welcome to Readora!</h1>
         <p style="font-size: 16px; font-weight: 600;">Dear ${user?.name},</p>
         <p style="font-size: 14px; line-height: 1.6;">
-          Thank you for registering with Book Vila. Were excited to have you onboard and are pleased to inform you that your account has been successfully created.
+          Thank you for registering with Readora. Were excited to have you onboard and are pleased to inform you that your account has been successfully created.
         </p>
         <div style="margin: 20px 0;">
           <p style="font-size: 14px;">With your new account, you can:</p>
@@ -103,13 +103,13 @@ const addeNewUser = async (req, res) => {
      
           </ul>
         </div>
-        <p style="font-size: 14px;">For any inquiries or support, feel free to contact us at <a href="mailto:bookvilabd@gmail.com" style="color: #2332c4; text-decoration: none;">bookvilabd@gmail.com</a>.</p>
+        <p style="font-size: 14px;">For any inquiries or support, feel free to contact us at <a href="mailto:readora.shop@gmail.com" style="color: #2332c4; text-decoration: none;">readora.shop@gmail.com</a>.</p>
         <p style="font-size: 14px; margin-top: 20px;">
-          Thank you for choosing Book Vila. We look forward to providing you with the best book purchase experience!
+          Thank you for choosing Readora. We look forward to providing you with the best book purchase experience!
         </p>
         <p style="font-size: 14px;">Sincerely,</p>
-        <p style="font-size: 14px; font-weight: bold;">The Book Vila Team</p>
-      <img src="https://i.postimg.cc/PxpwHK1k/Book-Vila-logo-removebg-preview.png"  alt="Book Vila logo"  width="200" height="200" />
+        <p style="font-size: 14px; font-weight: bold;">The Readora Team</p>
+      <img src="https://i.postimg.cc/1tHmHQg9/Logo-R1-T-modify-large-scale.png"  alt="Readora logo"  width="230" height="150" />
       </div>
       `,
     }).then(() =>
