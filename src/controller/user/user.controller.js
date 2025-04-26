@@ -99,7 +99,7 @@ const addeNewUser = async (req, res) => {
         <div style="margin: 20px 0;">
           <p style="font-size: 14px;">With your new account, you can:</p>
           <ul style="list-style-type: disc; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-            <li><strong>Log in to Your Dashboard:</strong> <a href="https://book-vila-client.vercel.app/" style="color: #2332c4; text-decoration: none;">Login Here</a></li>
+            <li><strong>Log in to Your Dashboard:</strong> <a href="https://www.readora.shop/" style="color: #2332c4; text-decoration: none;">Login Here</a></li>
      
           </ul>
         </div>
@@ -109,7 +109,7 @@ const addeNewUser = async (req, res) => {
         </p>
         <p style="font-size: 14px;">Sincerely,</p>
         <p style="font-size: 14px; font-weight: bold;">The Readora Team</p>
-      <img src="https://i.postimg.cc/1tHmHQg9/Logo-R1-T-modify-large-scale.png"  alt="Readora logo"  width="230" height="150" />
+      <img src="https://res.cloudinary.com/dqdircc96/image/upload/v1745676518/Logo_R1_T_kqgxb4.png"  alt="Readora logo"  width="230" height="150" />
       </div>
       `,
     }).then(() =>

@@ -170,20 +170,20 @@
 //         </ul>
 //       </div>
 //       <p style="font-size: 14px;">You can track your order status from your dashboard:</p>
-//       <p style="font-size: 14px;"><a href="https://book-vila-client.vercel.app/my-order" style="color: #2332c4; text-decoration: none;">View Order</a></p>
+//       <p style="font-size: 14px;"><a href="https://www.readora.shop/my-order" style="color: #2332c4; text-decoration: none;">View Order</a></p>
 //       <p style="font-size: 14px;">For any assistance, feel free to contact us at <a href="mailto:readora.shop@gmail.com" style="color: #2332c4; text-decoration: none;">readora.shop@gmail.com</a>.</p>
 //       <p style="font-size: 14px; margin-top: 20px;">
 //         We appreciate your trust in Readora and look forward to serving you again!
 //       </p>
 //       <p style="font-size: 14px;">Sincerely,</p>
 //       <p style="font-size: 14px; font-weight: bold;">The Readora Team</p>
-//       <img src="https://i.postimg.cc/PxpwHK1k/Book-Vila-logo-removebg-preview.png" alt="Readora logo" width="200" height="200" />
+//       <img src="https://res.cloudinary.com/dqdircc96/image/upload/v1745676518/Logo_R1_T_kqgxb4.png" alt="Readora logo" width="200" height="200" />
 //     </div>
 //     `,
 //     });
 
 //     // redirect success page
-//     res.redirect("https://book-vila-client.vercel.app/success");
+//     res.redirect("https://www.readora.shop/success");
 //   } catch (error) {
 //     console.error("Error in successPayment:", error.message);
 //     res.status(500).json({ message: error.message });
@@ -192,12 +192,12 @@
 
 // // fail page a redirect er post api
 // const fail = async (req, res) => {
-//   res.redirect("https://book-vila-client.vercel.app/fail");
+//   res.redirect("https://www.readora.shop/fail");
 // };
 
 // // cancle page a redirect er post api
 // const cancle = async (req, res) => {
-//   res.redirect("https://book-vila-client.vercel.app/cancle");
+//   res.redirect("https://www.readora.shop/cancle");
 // };
 
 // const statusUpdate = async (req, res) => {
@@ -413,14 +413,14 @@ const successPayment = async (req, res) => {
         </ul>
       </div>
       <p style="font-size: 14px;">You can track your order status from your dashboard:</p>
-      <p style="font-size: 14px;"><a href="https://book-vila-client.vercel.app/my-order" style="color: #2332c4; text-decoration: none;">View Order</a></p>
+      <p style="font-size: 14px;"><a href="https://www.readora.shop/my-order" style="color: #2332c4; text-decoration: none;">View Order</a></p>
       <p style="font-size: 14px;">For any assistance, feel free to contact us at <a href="mailto:readora.shop@gmail.com" style="color: #2332c4; text-decoration: none;">readora.shop@gmail.com</a>.</p>
       <p style="font-size: 14px; margin-top: 20px;">
         We appreciate your trust in Readora and look forward to serving you again!
       </p>
       <p style="font-size: 14px;">Sincerely,</p>
       <p style="font-size: 14px; font-weight: bold;">The Readora Team</p>
-      <img src="https://i.postimg.cc/1tHmHQg9/Logo-R1-T-modify-large-scale.png" alt="Readora logo" width="230" height="150" />
+      <img src="https://res.cloudinary.com/dqdircc96/image/upload/v1745676518/Logo_R1_T_kqgxb4.png" alt="Readora logo" width="230" height="150" />
     </div>
     `,
     });

@@ -34,7 +34,7 @@ app.use(
     origin: [
       "https://www.readora.shop",
       "http://localhost:3001",
-      "https://book-vila-client.vercel.app",
+      "http://localhost:3000",
     ],
     credentials: true,
   })
