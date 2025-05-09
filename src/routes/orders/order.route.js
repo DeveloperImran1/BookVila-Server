@@ -5,7 +5,6 @@ const {
   createNewOrder,
   createPayment,
   successPayment,
-  fail,
   cancle,
   getMyOrderWithId,
   statusUpdate,

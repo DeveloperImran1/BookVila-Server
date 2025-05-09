@@ -11,6 +11,31 @@ const getPublications = async (req, res) => {
   }
 };
 
+// get all Publication with serarch params and pagignation
+const getAllPublicationWithParams = async (req, res) => {
+  try {
+    const { searchQuery, page = 1 } = req.query;
+    const limit = 12;
+
+    const query = {};
+
+    if (searchQuery) {
+      const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+      query.name = { $in: regex };
+    }
+
+    const publications = await Publication.find(query)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    const totalPublication = await Publication.countDocuments(query);
+
+    res.status(200).json({ publications, totalPublication });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // get single publication with id
 const getSinglePublication = async (req, res) => {
   const id = req.params.id;
@@ -103,4 +128,5 @@ module.exports = {
   addNewPublication,
   deletePublication,
   updatePublication,
+  getAllPublicationWithParams,
 };

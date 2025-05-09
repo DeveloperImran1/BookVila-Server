@@ -11,6 +11,32 @@ const getAllAuthors = async (req, res) => {
   }
 };
 
+// get all author with serarch params and pagignation
+const getAllAuthorsWithParams = async (req, res) => {
+  try {
+    const { searchQuery, page = 1 } = req.query;
+    const limit = 12;
+
+    const query = {};
+
+    if (searchQuery) {
+      // console.log(searchQuery)
+      const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+      query.name = { $in: regex };
+    }
+
+    const authors = await Authors.find(query)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    const totalAuthors = await Authors.countDocuments(query);
+
+    res.status(200).json({ authors, totalAuthors });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getSingleWriter = async (req, res) => {
   const id = req.params.id;
   try {
@@ -111,4 +137,5 @@ module.exports = {
   addNewAuthor,
   deleteAuthor,
   updateAuthor,
+  getAllAuthorsWithParams,
 };
