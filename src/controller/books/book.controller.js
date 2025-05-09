@@ -83,7 +83,7 @@ const getSingleBook = async (req, res) => {
   }
 };
 
-// get featured books
+// get attribute books
 const getAttributeBooks = async (req, res) => {
   try {
     const { attribute, searchQuery, page = 1 } = req.query;
